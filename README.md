@@ -1,7 +1,7 @@
-<h1 align="center">Factor - Hacker News Example</h1>
+<h1 align="center">Factor Chat Example</h1>
 
 <p align="center">
-HackerNews clone built with Factor, Vue and TypeScript.
+Chat example built with Factor. Includes middleware for a websocket as well as using Form UI.
 </p>
 
 <p align="center">

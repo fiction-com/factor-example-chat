@@ -29,7 +29,7 @@ const getSocket = async (): Promise<WebSocket> => {
     return await new Promise(resolve => {
       __socket.addEventListener("open", () => {
         __socket.addEventListener("message", function(event: MessageEvent) {
-          emitEvent("received-message", event)
+          emitEvent("received-message", JSON.parse(event.data))
         })
         resolve(__socket)
       })
@@ -41,8 +41,12 @@ const getSocket = async (): Promise<WebSocket> => {
  * Send a message to the socket
  * @param text - message
  */
-export const sendMessage = async (text: string): Promise<void> => {
+export const sendMessage = async (data: {
+  name: string;
+  email: string;
+  text: string;
+}): Promise<void> => {
   const sock = await getSocket()
 
-  sock.send(text)
+  sock.send(JSON.stringify(data))
 }

@@ -9,9 +9,18 @@ addCallback({
     expressWs(app)
 
     app.ws("/__chat", (ws, request: Request) => {
+      // request used for auth/bearer
       ws.on("message", message => {
         setTimeout(() => {
-          ws.send(`This is an echo of ${message}`)
+          const data = JSON.parse(message as string)
+
+          const returnData = {
+            text: `This is an echo of "${data.text}"`,
+            email: "hello@fiction.com",
+            name: "Factor Server"
+          }
+
+          ws.send(JSON.stringify(returnData))
         }, 500)
       })
     })

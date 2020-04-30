@@ -19,13 +19,7 @@
             </svg>
           </router-link>
         </div>
-        <div class="nav">
-          <router-link to="/v/top">Top</router-link>
-          <router-link to="/v/new">New</router-link>
-          <router-link to="/v/show">Show</router-link>
-          <router-link to="/v/ask">Ask</router-link>
-          <router-link to="/v/job">Jobs</router-link>
-        </div>
+        <div class="nav" />
         <div class="alt">
           <a
             class="github"
@@ -57,7 +51,7 @@ export default Vue.extend({
   components: { factorIcon },
   metaInfo() {
     return {
-      titleTemplate: "%s | Factor Hacker News",
+      titleTemplate: "%s | Factor Example",
       image: require("./favicon.png")
     }
   }
@@ -70,7 +64,7 @@ export default Vue.extend({
 html.factor-app {
   @import "~@factor/ui/css/standard-form.less";
   --color-text: #34495e;
-  --color-primary: #0471ff;
+  --color-primary: #14d96e;
   --font-family-primary: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   font-family: var(--font-family-primary);
