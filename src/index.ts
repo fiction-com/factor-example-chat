@@ -6,12 +6,14 @@ import { addContentRoutes } from "@factor/api"
  * treat these as working components
  */
 
-const chatView = (): Promise<any> => import("./el/v-chat.vue")
-
 /**
  * Add application routes
  */
 addContentRoutes({
   key: "appRoutes",
-  routes: [{ path: "/", component: chatView }]
+  routes: [
+    {path: "/", component: () => import("./pages/home.vue")},
+    // {path: "/", component: import("./el/v-chat.vue")},
+    // {path: "/home", name: 'home' component: chatView}
+  ]
 })

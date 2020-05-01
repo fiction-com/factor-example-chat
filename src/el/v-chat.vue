@@ -30,6 +30,7 @@ import { onEvent } from "@factor/api"
 import { sendMessage } from "../socket-client"
 
 export default Vue.extend({
+  name: 'v-chat',
   components: { factorBtn, factorForm, factorInputWrap, factorAvatar },
   data() {
     return {
