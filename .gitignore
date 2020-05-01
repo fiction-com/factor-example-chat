@@ -48,3 +48,5 @@ server.csr
 server.csr.cnf
 v3.ext
 
+/.idea
+
