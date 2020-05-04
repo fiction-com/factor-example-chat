@@ -1,4 +1,4 @@
-import { addContentRoutes } from "@factor/api"
+import { addContentRoutes, addPostType } from "@factor/api"
 
 /**
  * Primary view components
@@ -13,7 +13,22 @@ addContentRoutes({
   key: "appRoutes",
   routes: [
     {path: "/", component: () => import("./pages/home.vue")},
-    // {path: "/", component: import("./el/v-chat.vue")},
-    // {path: "/home", name: 'home' component: chatView}
   ]
+})
+
+addPostType({
+  postType: "chat",
+  nameIndex: "Chats",
+  nameSingle: "Chat",
+  namePlural: "Chats",
+  permissions: {
+    create: { accessLevel: 0 },
+    retrieve: {
+      accessLevel: 500,
+    },
+    embedded: {
+      create: { accessLevel: 0 },
+      retrieve: { accessLevel: 0 },
+    },
+  },
 })

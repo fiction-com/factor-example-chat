@@ -1,4 +1,4 @@
-import { addCallback } from "@factor/api"
+import { addCallback, addEndpoint } from "@factor/api"
 import expressWs, { WithWebsocketMethod } from "express-ws"
 import { Express, Request } from "express"
 
@@ -26,3 +26,5 @@ addCallback({
     })
   }
 })
+
+
