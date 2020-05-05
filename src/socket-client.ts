@@ -42,8 +42,7 @@ const getSocket = async (): Promise<WebSocket> => {
  * @param text - message
  */
 export const sendMessage = async (data: {
-  name: string;
-  email: string;
+  _id: string;
   text: string;
 }): Promise<void> => {
   const sock = await getSocket()

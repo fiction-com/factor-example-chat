@@ -1,11 +1,7 @@
 <template>
   <div class="chat-view">
     <factor-form class="input-form">
-      <div class="meta">
-        <factor-input-wrap v-model="data.name" input="factor-input-text" label="Name" />
-        <factor-input-wrap v-model="data.email" input="factor-input-email" label="Email" />
-      </div>
-      <factor-input-wrap v-model="data.text" input="factor-input-textarea" label="Message" />
+      <factor-input-wrap v-model="messageText" input="factor-input-textarea" label="Message" />
 
       <factor-btn btn="primary" @click="send()">Send</factor-btn>
     </factor-form>
@@ -26,35 +22,47 @@
 <script lang="ts">
 import Vue from "vue"
 import { factorBtn, factorAvatar, factorForm, factorInputWrap } from "@factor/ui"
-import { onEvent } from "@factor/api"
 import { sendMessage } from "../socket-client"
+import { registerChat } from "../chat-service";
+import { initChat, sendMessageToChat } from "../api";
 
 export default Vue.extend({
   name: 'v-chat',
   components: { factorBtn, factorForm, factorInputWrap, factorAvatar },
+  props: {
+    chatId: {
+      type: String,
+    },
+  },
   data() {
     return {
+      registeredChatId: null,
       messages: [],
-      data: {
-        email: "",
-        name: "",
-        text: ""
-      }
+      messageText: ""
     }
+  },
+  async mounted () {
+    if (!this.chatIdComputed) {
+      this.registeredChatId = await initChat()
+    }
+    registerChat(this.onChatMessage)
   },
   metaInfo: {
     title: "Chat"
   },
-  mounted(this: any) {
-    onEvent("received-message", (data: MessageEvent) => {
-      this.messages.unshift(data)
-    })
-  },
   methods: {
+    onChatMessage(message: string) {
+
+    },
     async send(this: any) {
-      await sendMessage(this.data)
-      this.messages.unshift({ ...this.data }) // remove mutable
-      this.data.text = ""
+      await sendMessage({_id: this.chatIdComputed, text: this.messageText})
+      // this.messages.unshift({ ...this.data }) // remove mutable
+      this.text = ""
+    }
+  },
+  computed: {
+    chatIdComputed (this: any): string {
+      return this.chatId || this.registeredChatId
     }
   }
 })

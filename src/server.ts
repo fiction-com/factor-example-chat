@@ -1,4 +1,4 @@
-import { addCallback, addEndpoint } from "@factor/api"
+import { addCallback, currentUserId, requestEmbeddedPost } from "@factor/api"
 import expressWs, { WithWebsocketMethod } from "express-ws"
 import { Express, Request } from "express"
 
@@ -10,21 +10,32 @@ addCallback({
 
     app.ws("/__chat", (ws, request: Request) => {
       // request used for auth/bearer
-      ws.on("message", message => {
+      ws.on("message", (message: string) => {
         setTimeout(() => {
-          const data = JSON.parse(message as string)
+          const {_id, text} = JSON.parse(message) as {_id: string; text: string}
 
-          const returnData = {
-            text: `This is an echo of "${data.text}"`,
-            email: "hello@fiction.com",
-            name: "Factor Server"
+          // Set up a post
+          const postData = {
+            content: text,
+            author: [currentUserId()]
           }
 
-          ws.send(JSON.stringify(returnData))
+          // Save as embedded
+          requestEmbeddedPost({
+            action: "save",
+            postType: 'chat',
+            data: postData,
+            parentId: _id,
+          }).then((result) => {
+            ws.send(JSON.stringify(result))
+          }).catch(e => console.error('e', e))
+
         }, 500)
       })
     })
   }
 })
+
+import './endpoints/endpoints'
 
 
