@@ -7,6 +7,6 @@ export const initChat = () => endpointRequest({
 })
 export const sendMessageToChat = ({chatId, message}: {chatId: string; message: string}) => endpointRequest({
   id: "chat",
-  method: "sendMessage",
+  method: "addMessage",
   params: {chatId, message},
 })

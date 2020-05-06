@@ -12,7 +12,7 @@
         </div>
         <div class="content">
           <div class="name">{{ message.name }}</div>
-          <div class="text">{{ message.text }}</div>
+          <div class="text">{{ message.content }}</div>
         </div>
       </div>
     </div>
@@ -24,7 +24,8 @@ import Vue from "vue"
 import { factorBtn, factorAvatar, factorForm, factorInputWrap } from "@factor/ui"
 import { sendMessage } from "../socket-client"
 import { registerChat } from "../chat-service";
-import { initChat, sendMessageToChat } from "../api";
+import { currentUserId, requestEmbeddedPost } from "@factor/api"
+import { initChat, sendMessageToChat } from "../endpoints/chat/client";
 
 export default Vue.extend({
   name: 'v-chat',
@@ -41,23 +42,46 @@ export default Vue.extend({
       messageText: ""
     }
   },
-  async mounted () {
+  async mounted (this: any) {
+    console.log('this.chatIdComputed', this.chatIdComputed)
     if (!this.chatIdComputed) {
       this.registeredChatId = await initChat()
     }
     registerChat(this.onChatMessage)
+    const chat = await requestEmbeddedPost({
+      parentId: this.chatIdComputed, // parent post ID
+      skip: 0, // embedded post to skip
+      limit: 50, // number of embedded posts returned
+      action: "retrieve",
+    })
+    this.messages = chat.embedded
   },
   metaInfo: {
     title: "Chat"
   },
   methods: {
-    onChatMessage(message: string) {
-
+    onChatMessage (message: string) {
+      console.log('message', message)
     },
-    async send(this: any) {
+    async send (this: any) {
+      // Set up a post
+      const postData = {
+        content: this.messageText,
+        author: [currentUserId()]
+      }
+
+      // Save as embedded
+      const result = await requestEmbeddedPost({
+        action: "save",
+        postType: 'chat',
+        data: postData,
+        parentId: this.chatIdComputed,
+      })
+
+      // await sendMessageToChat({chatId: this.chatIdComputed, message: this.messageText})
       await sendMessage({_id: this.chatIdComputed, text: this.messageText})
       // this.messages.unshift({ ...this.data }) // remove mutable
-      this.text = ""
+      // this.messageText = ""
     }
   },
   computed: {

@@ -23,10 +23,10 @@
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
-"@factor/api@^1.7.2":
-  version "1.7.2"
-  resolved "https://registry.yarnpkg.com/@factor/api/-/api-1.7.2.tgz#9d6d622d7851a5a17eca2c0688b1d7336aaec28c"
-  integrity sha512-ZTi0JKSbS/JstVRXzZdl6IioWRAHHhr2Ext+nn9cIOG7/I2AAyQklhEJlJR5Bc9nQK4MZgraNLjlQgqBF7q9sQ==
+"@factor/api@^1.7.5":
+  version "1.7.5"
+  resolved "https://registry.yarnpkg.com/@factor/api/-/api-1.7.5.tgz#4a752bb8634d1c1ed4c2318338b3a0abb91d8a04"
+  integrity sha512-tlXNPFqjklQnLCRq/Oe2+r0Pzb4g1jxLDP7kjljJ6y0SfHG9hH/hia5S+/LMPYTbuUGgSCvMWU2sqDRKOtjqAw==
   dependencies:
     "@types/detect-node" "^2.0.0"
     "@types/jquery" "^3.3.31"
@@ -63,10 +63,10 @@
     validator "^13.0.0"
     vue "^2.6.11"
 
-"@factor/app@^1.7.4":
-  version "1.7.4"
-  resolved "https://registry.yarnpkg.com/@factor/app/-/app-1.7.4.tgz#daaf261e32aec745c7b6f95741fb1eb3420d260a"
-  integrity sha512-DozFZZiQWOcmTES6eeG/ppuoofWeGxUdTHO2KIffn4kxjsGlqnpE2sQc71w52747asLbmD8j+GsjKMb+0d13UQ==
+"@factor/app@^1.7.5":
+  version "1.7.5"
+  resolved "https://registry.yarnpkg.com/@factor/app/-/app-1.7.5.tgz#b5531fcf5dba69befe4fc7b98e19cac32e0012a2"
+  integrity sha512-hhC0XkvFW+Avac9RmoW9zZpojhAel/9dPWRwuOjHtRmc6CglXQ0n/YJjGDxR90Il3y1j1JFzTiRoyZIQ1EwJug==
   dependencies:
     qs "^6.6.0"
     vue "^2.6.7"
@@ -134,10 +134,10 @@
     webpack-node-externals "^1.7.2"
     yargs "^15.0.2"
 
-"@factor/cli@^1.7.4":
-  version "1.7.4"
-  resolved "https://registry.yarnpkg.com/@factor/cli/-/cli-1.7.4.tgz#9e994a4d50bb202f3c49e8c8f3cfaf3eaabfba34"
-  integrity sha512-w6oE5pSmMm9q2jRDOPtP/dZuMFum4QrFq3fB9NSGmCkj+XUsJC434S5NvloZ6kI0hjkelxQr/O0QXFnvOfA6og==
+"@factor/cli@^1.7.5":
+  version "1.7.5"
+  resolved "https://registry.yarnpkg.com/@factor/cli/-/cli-1.7.5.tgz#7dfd2f73261d7caa0459c76a2cd65ce46eee1cf3"
+  integrity sha512-lC1WrCEzs0uqZmCnbk8czexQsZEYvxmKq11IicH611TYNlFhQM8nakLoTmf+AUheOetSuSBsGsyD+UA+Y0T9ZQ==
   dependencies:
     "@types/fs-extra" "^8.1.0"
     "@types/inquirer" "^6.5.0"
@@ -158,37 +158,37 @@
     ts-node "^8.5.0"
     yargs "^15.0.2"
 
-"@factor/core@^1.7.4":
-  version "1.7.4"
-  resolved "https://registry.yarnpkg.com/@factor/core/-/core-1.7.4.tgz#f1d55b9267db098d91efe81ac536fd627e0f22a7"
-  integrity sha512-aUxmjMbSnShqOtkfQ0VFjBpraBMBy8gWyTyQrUo8z/n5VYAQHcuyokcitKeKhWryNI98Yyu1YienKS1ToctFJQ==
+"@factor/core@^1.7.5":
+  version "1.7.5"
+  resolved "https://registry.yarnpkg.com/@factor/core/-/core-1.7.5.tgz#3b4d15563ad4e09656cf4938962f9e26414b4d75"
+  integrity sha512-6hmmwupXb3dNThWlYxNibLOt9NpW+RVsAGZsyTLLSFolJF7p1eGSgfpc2Ktvww0iTqOdvns8gBi2DzDuyH7hWg==
   dependencies:
-    "@factor/api" "^1.7.2"
-    "@factor/app" "^1.7.4"
+    "@factor/api" "^1.7.5"
+    "@factor/app" "^1.7.5"
     "@factor/attachment" "^1.7.0"
     "@factor/build" "^1.7.2"
-    "@factor/cli" "^1.7.4"
-    "@factor/dashboard" "^1.7.4"
+    "@factor/cli" "^1.7.5"
+    "@factor/dashboard" "^1.7.5"
     "@factor/email" "^1.7.0"
     "@factor/endpoint" "^1.6.0"
     "@factor/loader" "^1.7.2"
     "@factor/meta" "^1.6.3"
     "@factor/plugin-ssr-bar" "^1.6.0"
-    "@factor/post" "^1.7.4"
-    "@factor/server" "^1.7.2"
-    "@factor/templates" "^1.7.0"
-    "@factor/ui" "^1.7.4"
-    "@factor/user" "^1.7.4"
+    "@factor/post" "^1.7.5"
+    "@factor/server" "^1.7.5"
+    "@factor/templates" "^1.7.5"
+    "@factor/ui" "^1.7.5"
+    "@factor/user" "^1.7.5"
     ts-node "^8.5.0"
     typescript "^3.8.0"
 
-"@factor/dashboard@^1.7.4":
-  version "1.7.4"
-  resolved "https://registry.yarnpkg.com/@factor/dashboard/-/dashboard-1.7.4.tgz#89b04cc4d7ff220f22753b1af8223371e02997b8"
-  integrity sha512-pGohUSUjMdVAxusdgJRAgM6X9cnR61L2zTj+Iu9BHjJex8C7mGjRadt2+s69w7ZCs/E8BHlwnKpzuQOQQKvvDw==
+"@factor/dashboard@^1.7.5":
+  version "1.7.5"
+  resolved "https://registry.yarnpkg.com/@factor/dashboard/-/dashboard-1.7.5.tgz#7bb232cefb57bd2c431ad7babeddfa1bc84d29e8"
+  integrity sha512-tIBGFLTEDKAPpS357FIvucrE71VCHkzY9stYbAmyoXgc2TzZoJpfVn+7V0CJslG/GLSKg2C7mFT4quTV7oEvpg==
   dependencies:
     "@factor/plugin-notify" "^1.7.2"
-    "@factor/plugin-standard-signin" "^1.7.2"
+    "@factor/plugin-standard-signin" "^1.7.5"
     "@types/sortablejs" "^1.10.0"
 
 "@factor/email@^1.7.0":
@@ -252,15 +252,15 @@
   resolved "https://registry.yarnpkg.com/@factor/plugin-ssr-bar/-/plugin-ssr-bar-1.6.0.tgz#796c2285fffd7e1cd10be717e22190c9c7263b71"
   integrity sha512-evlgPEFVbG600Xdm4yJjxIigQ0IfN8IOpurNEsMFJTLI4w85gR02W4kUYvbi1a3zKHV/y5rN6wnCw7NLfo0etg==
 
-"@factor/plugin-standard-signin@^1.7.2":
-  version "1.7.2"
-  resolved "https://registry.yarnpkg.com/@factor/plugin-standard-signin/-/plugin-standard-signin-1.7.2.tgz#e7d141a46d5dd322e7283c4e6da6fecb59cd3d8b"
-  integrity sha512-trNsOAX3hRiPd6Nh2Q2Fi0vC7qZUBRPhZDhsuLBSOCsw+f6HOgQB8N4kTkmqW7PUQXqlrJU51BSX8X+xcJw2lg==
+"@factor/plugin-standard-signin@^1.7.5":
+  version "1.7.5"
+  resolved "https://registry.yarnpkg.com/@factor/plugin-standard-signin/-/plugin-standard-signin-1.7.5.tgz#c6cd7bbd0c62a650b6c9b767945c82082ec4eb4c"
+  integrity sha512-iESocN8aTVXR7M5iIMWpPsJBXuIkuJ+EMx476LeHjN9fZbIBCgM99eMVf/+McznAmn/F2Y0Yir7CgII2UIS2jQ==
 
-"@factor/post@^1.7.4":
-  version "1.7.4"
-  resolved "https://registry.yarnpkg.com/@factor/post/-/post-1.7.4.tgz#ce08ec2f720bcde1358fcb10ca94e19cbdbbc622"
-  integrity sha512-WAFqhOfTI5p8690hLiXTuRkGzexmZxiM07QL8E/VS4iiSIlvIkzrWWm4IVy5K4vzr/Go1WtFKI+Oxpjz+mPd1Q==
+"@factor/post@^1.7.5":
+  version "1.7.5"
+  resolved "https://registry.yarnpkg.com/@factor/post/-/post-1.7.5.tgz#2a5f7994b92da4ba9ef3cdf636dddbc8aedf08ea"
+  integrity sha512-ikkY7cIymLstDGZ1FdDpeclsBt5BdSYjkv9iyovljXUKa20XF1wCcRpAb7hbxHH7LiVPGRogucFK/01dwLJ9Vw==
   dependencies:
     "@types/bson" "^4.0.2"
     "@types/mongoose" "^5.5.32"
@@ -275,10 +275,10 @@
     scriptjs "^2.5.9"
     vue-client-only "^2.0.0"
 
-"@factor/server@^1.7.2":
-  version "1.7.2"
-  resolved "https://registry.yarnpkg.com/@factor/server/-/server-1.7.2.tgz#912f03f82bd9ef782e3f594427d6422ee1ea97b6"
-  integrity sha512-inOIVYF+E1II7BfSIGB5Wm/qSGeZVykei8ZxC3oxpz7VWEtILPevY0zSSQcLgHTiCP+hOOGItnZXKkj5WKda8A==
+"@factor/server@^1.7.5":
+  version "1.7.5"
+  resolved "https://registry.yarnpkg.com/@factor/server/-/server-1.7.5.tgz#727375e63e846ef6fbc3a450f6d51cb14ba25ce1"
+  integrity sha512-yX5S/GHQQJnn2Qixr6MJryolKeKo41iEPN8uaha9lmofzmAJgH0UyL+i0b7K65NTqQ6wL0ii4rfhHnXaYIMPTg==
   dependencies:
     "@types/compression" "^1.0.1"
     "@types/express" "^4.17.2"
@@ -315,25 +315,25 @@
     webpack-hot-middleware "^2.24.3"
     yargs "^15.0.2"
 
-"@factor/templates@^1.7.0":
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/@factor/templates/-/templates-1.7.0.tgz#27e1fbcaa1dbc1b94f433231c6feba7fd0430b79"
-  integrity sha512-nYHtlAeKeA39A8mB3iFJKqUquAxQNVmsKyatofnd75yQJ/xXrKMCD0/PsSqUOP/+Ohh1/JKGU92o3+MYKNnvTg==
+"@factor/templates@^1.7.5":
+  version "1.7.5"
+  resolved "https://registry.yarnpkg.com/@factor/templates/-/templates-1.7.5.tgz#846ea1d3765c84ff1f73ae1dcebf5ee7576d6ed4"
+  integrity sha512-WyI4R5NLtfqSqIl9ET3HKuOLu7T7YTSa1EcyRovaGdsMc41qwGnkO0W2RdpsQa/RHZC1mLS9IpyRo2xdwFUZoA==
 
-"@factor/ui@^1.7.4":
-  version "1.7.4"
-  resolved "https://registry.yarnpkg.com/@factor/ui/-/ui-1.7.4.tgz#6efcb03440fa31bea234cea7d0616e2654a8dc6f"
-  integrity sha512-o1Sb2TF0epJ8vL7IvxcrCzOh8dz8mHnwYNMJ/0KjcYICSY5o40V9fWymTatbsooNzyDcBO/eVETQh5wzqIwVHA==
+"@factor/ui@^1.7.5":
+  version "1.7.5"
+  resolved "https://registry.yarnpkg.com/@factor/ui/-/ui-1.7.5.tgz#7f58b716129ce6b47e609442b4668c89c197f730"
+  integrity sha512-MpckXsPy0PA8IrLLr0aPj9F6nPHgtXE4sCgWQK0W9HmZw7XGhw2IHyBnWoJPVZ8PcMhzr5LdC5KZCKdVijuyaw==
   dependencies:
     easymde "^2.9.0"
     gravatar "^1.8.0"
     sortablejs "^1.10.1"
     vuejs-datepicker "^1.6.2"
 
-"@factor/user@^1.7.4":
-  version "1.7.4"
-  resolved "https://registry.yarnpkg.com/@factor/user/-/user-1.7.4.tgz#8e253566a852f734b6d2b5c91a0189e5dca139cc"
-  integrity sha512-fSeDS1tEUU8/ip9vzxdJCgjKHlvOhBGNaq0cH1YFeh68mthTtYovWQtbV2s4orTviUGfcRDdrCk6dy1STAr3wQ==
+"@factor/user@^1.7.5":
+  version "1.7.5"
+  resolved "https://registry.yarnpkg.com/@factor/user/-/user-1.7.5.tgz#0ae5f2226de94e1b7349766621b6ced6f761a1af"
+  integrity sha512-Ye85FG7Us51EPzUTEUWFg5C+4exvQvUq0vYuE32MgFq6QRHuKOtyHMUezI9NXf4+8pxW0+FmrxU3S8RnyPIHuA==
   dependencies:
     "@types/bcryptjs" "^2.4.2"
     "@types/jsonwebtoken" "^8.3.5"

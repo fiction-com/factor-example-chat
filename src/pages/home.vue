@@ -1,12 +1,16 @@
 <template>
   <div class="home-page">
-    <factor-btn btn="primary" @click="showChat = !showChat">
+    <factor-btn btn="primary" @click="openChat()">
       Show Chat
     </factor-btn>
     <factor-modal :vis.sync="showChat">
-      <v-chat v-if="showChat"/>
+      <v-chat
+        :chatId="chatId"
+        v-if="showChat"
+      />
     </factor-modal>
     <test-panel/>
+    <chat-list @openChat="chatId = $event, openChat()"/>
   </div>
 </template>
 
@@ -15,17 +19,27 @@ import Vue from "vue"
 import { factorBtn, factorModal } from "@factor/ui"
 import vChat from './../el/v-chat.vue'
 import testPanel from '../test-panel.vue'
+import ChatList from "../el/chat-list.vue"
 
 export default Vue.extend({
   name: 'home',
-  components: {factorBtn, factorModal, vChat, testPanel},
+  components: {ChatList, factorBtn, factorModal, vChat, testPanel},
   data() {
     return {
-      showChat: false
+      showChat: false,
+      chatId: null,
     }
+  },
+  mounted () {
+    getCurrentUser()
   },
   metaInfo: {
     title: "Home"
+  },
+  methods: {
+    openChat () {
+      this.showChat = !this.showChat
+    }
   }
 })
 </script>
