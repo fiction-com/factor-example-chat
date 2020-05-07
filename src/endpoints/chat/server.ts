@@ -1,42 +1,58 @@
-import { addEndpoint, addCallback, currentUserId } from "@factor/api"
+import { addCallback, addEndpoint, currentUserId } from "@factor/api"
 import { savePost } from "@factor/post/server"
 import { embeddedPost } from "@factor/post/embedded"
 import { ChatGetMessageData, ChatInitData, ChatMethods } from "./keys"
-import { Express, Request } from "express";
-import expressWs, { WithWebsocketMethod } from "express-ws";
+import { Express, Request } from "express"
+import expressWs, { WithWebsocketMethod } from "express-ws"
+import WebSocket from 'ws'
 
 addCallback({
   hook: "before-middleware",
   key: "addWs",
-  callback: ({ app }: { app: Express & WithWebsocketMethod }) => {
+  callback: ({app}: { app: Express & WithWebsocketMethod }) => {
     const wsInstance = expressWs(app)
+    // TODO The fact that we're only storing clients and not clearing them on disconnect is a memory leak.
+    const clientChats: Map<WebSocket, string> = new Map()
 
     app.ws("/__chat", (ws, request: Request) => {
+      const requestChatId = request.query.id as string
+      clientChats.set(ws, requestChatId)
+
       // request used for auth/bearer
-      ws.on("message", (message: string) => {
-        setTimeout(() => {
-          const {_id, text} = JSON.parse(message) as {_id: string; text: string}
+      ws.on("message", async (message: string) => {
+        const {_id, text} = JSON.parse(message) as { _id: string; text: string }
 
-          // Set up a post
-          const postData = {
-            content: text,
-            author: [currentUserId()]
+        // Set up a post
+        const postData = {
+          content: text,
+          author: currentUserId() ? [currentUserId()]: []
+        }
+
+        // Save as embedded
+        const result = await embeddedPost({
+          action: "save",
+          postType: 'chat',
+          data: postData,
+          parentId: _id
+        }, {})
+
+        // Emit to relevant clients
+        ;[...clientChats].forEach(([client, chatId]) => {
+          console.log('chatId', chatId)
+          // Wrong chat
+          if (requestChatId !== chatId) {
+            return
           }
-
-          // Save as embedded
-          const result = embeddedPost({
-            action: "save",
-            postType: 'chat',
-            data: postData,
-            parentId: _id,
-          })
-
-          const clients = wsInstance.getWss().clients
-          console.log('clients', clients)
-
-          // Send post back
-          ws.send(JSON.stringify(result))
-        }, 500)
+          // Connection down
+          if (client.readyState !== WebSocket.OPEN) {
+            return
+          }
+          // try {
+            client.send(JSON.stringify(result))
+          // } catch (e) {
+          //   console.error('error', e)
+          // }
+        })
       })
     })
   }
@@ -49,6 +65,7 @@ addEndpoint({
       const chat = await savePost({postType: "chat", data}, {bearer})
       return chat._id
     },
+    // @deprecated
     [ChatMethods.addMessage]: async ({chatId, message}: ChatGetMessageData, meta) => {
       const result = await requestEmbeddedPost({
         action: "save",
@@ -56,7 +73,7 @@ addEndpoint({
           content: message,
           author: [currentUserId()]
         },
-        parentId: chatId,
+        parentId: chatId
       })
 
       return result

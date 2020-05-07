@@ -23,9 +23,7 @@ addPostType({
   namePlural: "Chats",
   permissions: {
     create: { accessLevel: 0 },
-    retrieve: {
-      accessLevel: 500,
-    },
+    retrieve: {accessLevel: 0 },
     embedded: {
       create: { accessLevel: 0 },
       retrieve: { accessLevel: 0 },

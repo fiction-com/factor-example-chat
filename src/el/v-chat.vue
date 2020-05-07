@@ -22,10 +22,10 @@
 <script lang="ts">
 import Vue from "vue"
 import { factorBtn, factorAvatar, factorForm, factorInputWrap } from "@factor/ui"
-import { sendMessage } from "../socket-client"
 import { registerChat } from "../chat-service";
 import { currentUserId, requestEmbeddedPost } from "@factor/api"
-import { initChat, sendMessageToChat } from "../endpoints/chat/client";
+import { initChat } from "../endpoints/chat/client"
+import { ChatWebsocketService } from "../socket-client"
 
 export default Vue.extend({
   name: 'v-chat',
@@ -39,15 +39,17 @@ export default Vue.extend({
     return {
       registeredChatId: null,
       messages: [],
-      messageText: ""
+      messageText: "",
+      webSocketService: null as ChatWebsocketService | null,
     }
   },
   async mounted (this: any) {
-    console.log('this.chatIdComputed', this.chatIdComputed)
+    // Create chat on backend.
     if (!this.chatIdComputed) {
       this.registeredChatId = await initChat()
     }
-    registerChat(this.onChatMessage)
+
+    // Get all chat messages.
     const chat = await requestEmbeddedPost({
       parentId: this.chatIdComputed, // parent post ID
       skip: 0, // embedded post to skip
@@ -55,13 +57,19 @@ export default Vue.extend({
       action: "retrieve",
     })
     this.messages = chat.embedded
+
+    // Connect websocket
+    registerChat(this.onChatMessage)
+    this.webSocketService = new ChatWebsocketService()
+    await this.webSocketService.initialize(this.chatIdComputed)
   },
   metaInfo: {
     title: "Chat"
   },
   methods: {
-    onChatMessage (message: string) {
-      console.log('message', message)
+    onChatMessage (message: any) {
+      console.log('message.embedded', message.embedded)
+      this.messages = [...this.messages, ...message.embedded]
     },
     async send (this: any) {
       // Set up a post
@@ -70,18 +78,7 @@ export default Vue.extend({
         author: [currentUserId()]
       }
 
-      // Save as embedded
-      const result = await requestEmbeddedPost({
-        action: "save",
-        postType: 'chat',
-        data: postData,
-        parentId: this.chatIdComputed,
-      })
-
-      // await sendMessageToChat({chatId: this.chatIdComputed, message: this.messageText})
-      await sendMessage({_id: this.chatIdComputed, text: this.messageText})
-      // this.messages.unshift({ ...this.data }) // remove mutable
-      // this.messageText = ""
+      await this.webSocketService.sendMessage({_id: this.chatIdComputed, text: this.messageText})
     }
   },
   computed: {

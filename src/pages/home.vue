@@ -17,6 +17,7 @@
 <script lang="ts">
 import Vue from "vue"
 import { factorBtn, factorModal } from "@factor/ui"
+import { currentUserId } from "@factor/api"
 import vChat from './../el/v-chat.vue'
 import testPanel from '../test-panel.vue'
 import ChatList from "../el/chat-list.vue"
@@ -31,7 +32,7 @@ export default Vue.extend({
     }
   },
   mounted () {
-    getCurrentUser()
+    console.log('currentUserId()', currentUserId())
   },
   metaInfo: {
     title: "Home"
