@@ -2,7 +2,6 @@ export const CHAT_RESOURCE = "chat"
 
 export const ChatMethods = {
   init: 'init',
-  addMessage: 'addMessage',
 }
 
 export type ChatInitData = {}

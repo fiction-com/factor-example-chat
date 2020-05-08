@@ -20,12 +20,14 @@ addCallback({
 
       // request used for auth/bearer
       ws.on("message", async (message: string) => {
-        const {_id, text} = JSON.parse(message) as { _id: string; text: string }
+        const {_id, text, authorId} = JSON.parse(message) as { _id: string; text: string }
+
+        // TODO Passing user id is not ideal for security.
 
         // Set up a post
         const postData = {
           content: text,
-          author: currentUserId() ? [currentUserId()]: []
+          author: authorId ? [authorId]: []
         }
 
         // Save as embedded
@@ -38,7 +40,6 @@ addCallback({
 
         // Emit to relevant clients
         ;[...clientChats].forEach(([client, chatId]) => {
-          console.log('chatId', chatId)
           // Wrong chat
           if (requestChatId !== chatId) {
             return
@@ -47,11 +48,7 @@ addCallback({
           if (client.readyState !== WebSocket.OPEN) {
             return
           }
-          // try {
-            client.send(JSON.stringify(result))
-          // } catch (e) {
-          //   console.error('error', e)
-          // }
+          client.send(JSON.stringify(result))
         })
       })
     })
@@ -65,18 +62,5 @@ addEndpoint({
       const chat = await savePost({postType: "chat", data}, {bearer})
       return chat._id
     },
-    // @deprecated
-    [ChatMethods.addMessage]: async ({chatId, message}: ChatGetMessageData, meta) => {
-      const result = await requestEmbeddedPost({
-        action: "save",
-        data: {
-          content: message,
-          author: [currentUserId()]
-        },
-        parentId: chatId
-      })
-
-      return result
-    }
   }
 })

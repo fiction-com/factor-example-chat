@@ -1,45 +1,45 @@
 <template>
   <div class="home-page">
-    <factor-btn btn="primary" @click="openChat()">
-      Show Chat
+    <h2>
+       Factor Chat Demo
+    </h2>
+
+    <factor-btn class="chat-button" btn="primary" @click="openChat()">
+      Show Chat&nbsp;
+      <factor-icon icon="fa fa-comment"/>
     </factor-btn>
-    <factor-modal :vis.sync="showChat">
-      <v-chat
-        :chatId="chatId"
-        v-if="showChat"
-      />
-    </factor-modal>
-    <test-panel/>
-    <chat-list @openChat="chatId = $event, openChat()"/>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue"
-import { factorBtn, factorModal } from "@factor/ui"
-import { currentUserId } from "@factor/api"
-import vChat from './../el/v-chat.vue'
-import testPanel from '../test-panel.vue'
-import ChatList from "../el/chat-list.vue"
+import { factorBtn, factorIcon } from "@factor/ui"
+import { currentUser, emitEvent } from "@factor/api"
 
 export default Vue.extend({
   name: 'home',
-  components: {ChatList, factorBtn, factorModal, vChat, testPanel},
-  data() {
-    return {
-      showChat: false,
-      chatId: null,
-    }
-  },
-  mounted () {
-    console.log('currentUserId()', currentUserId())
-  },
   metaInfo: {
     title: "Home"
   },
+  components: {factorBtn, factorIcon},
+  watch: {
+    currentUser: {
+      handler (currentUser) {
+        if (currentUser) {
+          this.$router.push({name: 'chat-list'})
+        }
+      },
+      immediate: true,
+    },
+  },
   methods: {
-    openChat () {
-      this.showChat = !this.showChat
+    openChat() {
+      emitEvent("open-chat", undefined)
+    }
+  },
+  computed: {
+    currentUser() {
+      return currentUser()
     }
   }
 })
@@ -48,5 +48,22 @@ export default Vue.extend({
 <style lang="less">
 .home-page {
 
+}
+
+@keyframes chat-button-pulse
+{
+  0% {
+    box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 0 35px rgba(0, 0, 0, 0);
+  }
+}
+
+.chat-button {
+  position: fixed !important;
+  right: 50px;
+  bottom: 50px;
+  animation: chat-button-pulse 1s infinite;
 }
 </style>

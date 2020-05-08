@@ -12,7 +12,7 @@ const socketUrl = (relativePath: string): string => {
 }
 
 export class ChatWebsocketService {
-  socket!: WebSocket
+  socket?: WebSocket
 
   /**
    * Spin up websocket connection.
@@ -36,6 +36,11 @@ export class ChatWebsocketService {
     }
   }
 
+  async close () {
+    this.socket.close()
+    this.socket = undefined
+  }
+
   /**
    * Send a message to the socket
    * @param data
@@ -44,6 +49,9 @@ export class ChatWebsocketService {
     _id: string;
     text: string;
   }): Promise<void> {
+    if (!this.socket) {
+      throw new Error('Initialize socket first.')
+    }
     this.socket.send(JSON.stringify(data))
   }
 }

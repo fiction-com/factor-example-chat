@@ -1,109 +1,144 @@
 <template>
-  <div class="chat-view">
-    <factor-form class="input-form">
-      <factor-input-wrap v-model="messageText" input="factor-input-textarea" label="Message" />
-
-      <factor-btn btn="primary" @click="send()">Send</factor-btn>
-    </factor-form>
-    <div class="messages">
-      <div v-for="(message, i) in messages" :key="i" class="message">
-        <div class="media">
-          <factor-avatar :email="message.email" />
-        </div>
-        <div class="content">
-          <div class="name">{{ message.name }}</div>
-          <div class="text">{{ message.content }}</div>
+  <factor-modal :vis.sync="show">
+    <div class="chat-view">
+      <div class="messages">
+        <div v-for="(message, i) in messages" :key="i" class="message">
+          <div class="media">
+            <factor-avatar v-if="isMessageFromCurrentUser(message)" url="https://picsum.photos/id/0/50/50" />
+            <factor-avatar v-else url="https://picsum.photos/id/1025/50/50" />
+          </div>
+          <div class="content">
+            <div class="name" v-if="isMessageFromCurrentUser(message)">Admin:</div>
+            <div class="name" v-else>Guest:</div>
+            <div class="text">{{ message.content }}</div>
+          </div>
         </div>
       </div>
+      <factor-form class="input-form">
+        <factor-input-wrap @keydown.enter="submit" class="input" placeholder="Type your message here..." v-model="messageText" input="factor-input-textarea"/>
+        <factor-btn btn="primary" @click="send()">Send</factor-btn>
+      </factor-form>
     </div>
-  </div>
+  </factor-modal>
 </template>
 
 <script lang="ts">
 import Vue from "vue"
-import { factorBtn, factorAvatar, factorForm, factorInputWrap } from "@factor/ui"
-import { registerChat } from "../chat-service";
-import { currentUserId, requestEmbeddedPost } from "@factor/api"
+import { factorBtn, factorAvatar, factorForm, factorInputWrap, factorModal } from "@factor/ui"
+import { registerChat } from "../chat-service"
+import { currentUser, requestEmbeddedPost, onEvent, currentUserId, offEvent } from "@factor/api"
 import { initChat } from "../endpoints/chat/client"
 import { ChatWebsocketService } from "../socket-client"
 
 export default Vue.extend({
   name: 'v-chat',
-  components: { factorBtn, factorForm, factorInputWrap, factorAvatar },
-  props: {
-    chatId: {
-      type: String,
-    },
-  },
+  components: { factorBtn, factorForm, factorInputWrap, factorAvatar, factorModal },
   data() {
     return {
+      chatId: undefined,
+      show: false,
       registeredChatId: null,
       messages: [],
       messageText: "",
       webSocketService: null as ChatWebsocketService | null,
     }
   },
-  async mounted (this: any) {
-    // Create chat on backend.
-    if (!this.chatIdComputed) {
-      this.registeredChatId = await initChat()
+  watch : {
+    show (show: boolean) {
+      if (!show) {
+        this.webSocketService.close()
+      }
     }
-
-    // Get all chat messages.
-    const chat = await requestEmbeddedPost({
-      parentId: this.chatIdComputed, // parent post ID
-      skip: 0, // embedded post to skip
-      limit: 50, // number of embedded posts returned
-      action: "retrieve",
-    })
-    this.messages = chat.embedded
-
-    // Connect websocket
-    registerChat(this.onChatMessage)
-    this.webSocketService = new ChatWebsocketService()
-    await this.webSocketService.initialize(this.chatIdComputed)
+  },
+  mounted (this: any) {
+    onEvent('open-chat', this.openChat)
+  },
+  beforeDestroy () {
+    offEvent('open-chat', this.openChat)
   },
   metaInfo: {
     title: "Chat"
   },
   methods: {
+    submit (event: KeyboardEvent) {
+      if (event.ctrlKey || event.shiftKey) {
+        return
+      }
+      this.send()
+      this.messageText = ''
+      event.preventDefault()
+    },
+    async openChat (chatId: string) {
+      // Open modal
+      this.chatId = chatId
+      this.show = true
+      this.messages = []
+
+      // Create chat on backend.
+      if (!this.chatIdComputed) {
+        this.registeredChatId = await initChat()
+      }
+
+      // Get all chat messages.
+      const chat = await requestEmbeddedPost({
+        parentId: this.chatIdComputed, // parent post ID
+        skip: 0, // embedded post to skip
+        limit: 50, // number of embedded posts returned
+        action: "retrieve",
+      })
+      this.messages = chat.embedded
+
+      // Connect websocket
+      registerChat(this.onChatMessage)
+      this.webSocketService = new ChatWebsocketService()
+      await this.webSocketService.initialize(this.chatIdComputed)
+      this.messageText = ''
+    },
     onChatMessage (message: any) {
-      console.log('message.embedded', message.embedded)
       this.messages = [...this.messages, ...message.embedded]
     },
     async send (this: any) {
-      // Set up a post
-      const postData = {
-        content: this.messageText,
-        author: [currentUserId()]
-      }
-
-      await this.webSocketService.sendMessage({_id: this.chatIdComputed, text: this.messageText})
-    }
+      await this.webSocketService.sendMessage({_id: this.chatIdComputed, text: this.messageText, authorId: currentUserId()})
+    },
+    isMessageFromCurrentUser (message: any): boolean {
+      console.log('message', message)
+      return message.author.includes(currentUserId())
+    },
   },
   computed: {
     chatIdComputed (this: any): string {
       return this.chatId || this.registeredChatId
+    },
+    currentUser () {
+      return currentUser()
     }
   }
 })
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .message {
-  padding: 1rem 0;
-  border-bottom: 1px solid var(--color-border);
   display: grid;
   grid-template-columns: 3rem 1fr;
   grid-gap: 1rem;
+  padding: 1rem 0;
+  text-align: left;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid var(--color-border);
+  }
+
   .name {
     font-weight: var(--font-weight-bold, 700);
   }
   .text {
     margin-top: 0.5rem;
   }
+  .avatar {
+    width: inherit;
+  }
 }
 .input-form {
-  margin: 3rem 0;
+  margin-top: 1rem;
   .meta {
     display: grid;
     grid-template-columns: 1fr 1fr;
