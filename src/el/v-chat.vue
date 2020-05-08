@@ -101,7 +101,6 @@ export default Vue.extend({
       await this.webSocketService.sendMessage({_id: this.chatIdComputed, text: this.messageText, authorId: currentUserId()})
     },
     isMessageFromCurrentUser (message: any): boolean {
-      console.log('message', message)
       return message.author.includes(currentUserId())
     },
   },
