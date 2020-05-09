@@ -4,11 +4,11 @@
       <div class="messages">
         <div v-for="(message, i) in messages" :key="i" class="message">
           <div class="media">
-            <factor-avatar v-if="isMessageFromCurrentUser(message)" url="https://picsum.photos/id/0/50/50" />
+            <factor-avatar v-if="isMessageFromAdmin(message)" url="https://picsum.photos/id/0/50/50" />
             <factor-avatar v-else url="https://picsum.photos/id/1025/50/50" />
           </div>
           <div class="content">
-            <div class="name" v-if="isMessageFromCurrentUser(message)">Admin:</div>
+            <div class="name" v-if="isMessageFromAdmin(message)">Admin:</div>
             <div class="name" v-else>Guest:</div>
             <div class="text">{{ message.content }}</div>
           </div>
@@ -52,9 +52,11 @@ export default Vue.extend({
   },
   mounted (this: any) {
     onEvent('open-chat', this.openChat)
+    onEvent("received-message", this.onChatMessage)
   },
   beforeDestroy () {
     offEvent('open-chat', this.openChat)
+    offEvent("received-message", this.onChatMessage)
   },
   metaInfo: {
     title: "Chat"
@@ -65,7 +67,6 @@ export default Vue.extend({
         return
       }
       this.send()
-      this.messageText = ''
       event.preventDefault()
     },
     async openChat (chatId: string) {
@@ -89,19 +90,18 @@ export default Vue.extend({
       this.messages = chat.embedded
 
       // Connect websocket
-      registerChat(this.onChatMessage)
       this.webSocketService = new ChatWebsocketService()
       await this.webSocketService.initialize(this.chatIdComputed)
-      this.messageText = ''
     },
     onChatMessage (message: any) {
       this.messages = [...this.messages, ...message.embedded]
     },
     async send (this: any) {
       await this.webSocketService.sendMessage({_id: this.chatIdComputed, text: this.messageText, authorId: currentUserId()})
+      this.messageText = ''
     },
-    isMessageFromCurrentUser (message: any): boolean {
-      return message.author.includes(currentUserId())
+    isMessageFromAdmin (message: any): boolean {
+      return message.author.length
     },
   },
   computed: {

@@ -13,7 +13,7 @@
     "eslint": "eslint --ext .ts,.js,.vue,.json ."
   },
   "dependencies": {
-    "@factor/core": "^1.7.5",
+    "@factor/core": "^1.7.7",
     "@factor/plugin-sitemap": "^1.5.24",
     "@factor/plugin-ssr-bar": "^1.5.26",
     "@types/express-ws": "^3.0.0",

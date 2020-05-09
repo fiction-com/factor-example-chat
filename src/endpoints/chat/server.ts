@@ -1,20 +1,25 @@
-import { addCallback, addEndpoint, currentUserId } from "@factor/api"
+import { addCallback, addEndpoint } from "@factor/api"
 import { savePost } from "@factor/post/server"
+import { setAuthorizedUser } from "@factor/endpoint/server"
 import { embeddedPost } from "@factor/post/embedded"
 import { ChatGetMessageData, ChatInitData, ChatMethods } from "./keys"
 import { Express, Request } from "express"
 import expressWs, { WithWebsocketMethod } from "express-ws"
 import WebSocket from 'ws'
 
+type Id = string
+
 addCallback({
   hook: "before-middleware",
   key: "addWs",
   callback: ({app}: { app: Express & WithWebsocketMethod }) => {
     const wsInstance = expressWs(app)
-    // TODO The fact that we're only storing clients and not clearing them on disconnect is a memory leak.
-    const clientChats: Map<WebSocket, string> = new Map()
+    const clientChats: Map<WebSocket, Id> = new Map()
 
-    app.ws("/__chat", (ws, request: Request) => {
+    app.ws("/__chat", async (ws, request: Request) => {
+      const bearer = await setAuthorizedUser(request.headers.authorization)
+      console.log('bearer', bearer)
+
       const requestChatId = request.query.id as string
       clientChats.set(ws, requestChatId)
 
@@ -50,6 +55,11 @@ addCallback({
           }
           client.send(JSON.stringify(result))
         })
+      })
+
+
+      ws.on('close', () => {
+        clientChats.delete(ws)
       })
     })
   }

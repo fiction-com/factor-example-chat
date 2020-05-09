@@ -23,10 +23,10 @@
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
-"@factor/api@^1.7.5":
-  version "1.7.5"
-  resolved "https://registry.yarnpkg.com/@factor/api/-/api-1.7.5.tgz#4a752bb8634d1c1ed4c2318338b3a0abb91d8a04"
-  integrity sha512-tlXNPFqjklQnLCRq/Oe2+r0Pzb4g1jxLDP7kjljJ6y0SfHG9hH/hia5S+/LMPYTbuUGgSCvMWU2sqDRKOtjqAw==
+"@factor/api@^1.7.6":
+  version "1.7.6"
+  resolved "https://registry.yarnpkg.com/@factor/api/-/api-1.7.6.tgz#80e5c4107270044aedfca65e7a80a320297ab285"
+  integrity sha512-wEehM4pTYEc0GqO0YxxiH+WyZ+oEYVc0dSAwXqhvTNbZlnZE8sMoeHyZ0Wt3WpBNi8DKFNntXi2ZY3Y6R2y0OA==
   dependencies:
     "@types/detect-node" "^2.0.0"
     "@types/jquery" "^3.3.31"
@@ -63,10 +63,10 @@
     validator "^13.0.0"
     vue "^2.6.11"
 
-"@factor/app@^1.7.5":
-  version "1.7.5"
-  resolved "https://registry.yarnpkg.com/@factor/app/-/app-1.7.5.tgz#b5531fcf5dba69befe4fc7b98e19cac32e0012a2"
-  integrity sha512-hhC0XkvFW+Avac9RmoW9zZpojhAel/9dPWRwuOjHtRmc6CglXQ0n/YJjGDxR90Il3y1j1JFzTiRoyZIQ1EwJug==
+"@factor/app@^1.7.6":
+  version "1.7.6"
+  resolved "https://registry.yarnpkg.com/@factor/app/-/app-1.7.6.tgz#569b2d48a62898b635caac5cc86d411c06a6f7c4"
+  integrity sha512-Lc+K2FRxEKdIytU5TYoCkXrSajAHmkqI2vj9XpWdHvitrg0FIemRCVVz9oE+xra+WsyJ5tkdWRrOhRxUrmgtRQ==
   dependencies:
     qs "^6.6.0"
     vue "^2.6.7"
@@ -84,10 +84,10 @@
     mime-types "^2.1.24"
     multer "^1.4.1"
 
-"@factor/build@^1.7.2":
-  version "1.7.2"
-  resolved "https://registry.yarnpkg.com/@factor/build/-/build-1.7.2.tgz#084ee27bbb6eebbeab2fcb15bb2c8dfdb8242857"
-  integrity sha512-s0Nbaqw7YUZmOzGvlnXV9cP8s5gWMdpAje0JazE9M91rZSl+sYw8oRdJ63hu9qYC+yiyYYm5BQ09pbi+zco60w==
+"@factor/build@^1.7.7":
+  version "1.7.7"
+  resolved "https://registry.yarnpkg.com/@factor/build/-/build-1.7.7.tgz#de9fdc0491756c27b9e466b0a86bfa8f1ca52359"
+  integrity sha512-sEAWl7XOEpSPZOaPQwRo4W4sgTCuxMlmT77+8IUvP+StfNBlFHERfA91xHDfMD0DG1szOhybkXtZwFks0Bmghg==
   dependencies:
     "@types/cli-progress" "^3.4.0"
     "@types/copy-webpack-plugin" "^5.0.0"
@@ -118,6 +118,7 @@
     null-loader "^4.0.0"
     optimize-css-assets-webpack-plugin "^5.0.1"
     postcss-loader "^3.0.0"
+    postcss-nested "^4.2.1"
     raw-loader "^4.0.0"
     terser-webpack-plugin "^2.1.3"
     ts-loader "^7.0.0"
@@ -158,34 +159,34 @@
     ts-node "^8.5.0"
     yargs "^15.0.2"
 
-"@factor/core@^1.7.5":
-  version "1.7.5"
-  resolved "https://registry.yarnpkg.com/@factor/core/-/core-1.7.5.tgz#3b4d15563ad4e09656cf4938962f9e26414b4d75"
-  integrity sha512-6hmmwupXb3dNThWlYxNibLOt9NpW+RVsAGZsyTLLSFolJF7p1eGSgfpc2Ktvww0iTqOdvns8gBi2DzDuyH7hWg==
+"@factor/core@^1.7.7":
+  version "1.7.7"
+  resolved "https://registry.yarnpkg.com/@factor/core/-/core-1.7.7.tgz#67f15dd6ff9d2253a8da659f52d15485073efd9b"
+  integrity sha512-cWUWngFbKuWYy4jnG/HfAKVYkEv8rUdHHBV7oG4hVzjPiDUHdX7WcIWqC1gbBvjnxQbxpXW72HXo5ecvjgANxw==
   dependencies:
-    "@factor/api" "^1.7.5"
-    "@factor/app" "^1.7.5"
+    "@factor/api" "^1.7.6"
+    "@factor/app" "^1.7.6"
     "@factor/attachment" "^1.7.0"
-    "@factor/build" "^1.7.2"
+    "@factor/build" "^1.7.7"
     "@factor/cli" "^1.7.5"
-    "@factor/dashboard" "^1.7.5"
+    "@factor/dashboard" "^1.7.6"
     "@factor/email" "^1.7.0"
-    "@factor/endpoint" "^1.6.0"
+    "@factor/endpoint" "^1.7.6"
     "@factor/loader" "^1.7.2"
     "@factor/meta" "^1.6.3"
     "@factor/plugin-ssr-bar" "^1.6.0"
-    "@factor/post" "^1.7.5"
+    "@factor/post" "^1.7.6"
     "@factor/server" "^1.7.5"
     "@factor/templates" "^1.7.5"
-    "@factor/ui" "^1.7.5"
-    "@factor/user" "^1.7.5"
+    "@factor/ui" "^1.7.6"
+    "@factor/user" "^1.7.7"
     ts-node "^8.5.0"
     typescript "^3.8.0"
 
-"@factor/dashboard@^1.7.5":
-  version "1.7.5"
-  resolved "https://registry.yarnpkg.com/@factor/dashboard/-/dashboard-1.7.5.tgz#7bb232cefb57bd2c431ad7babeddfa1bc84d29e8"
-  integrity sha512-tIBGFLTEDKAPpS357FIvucrE71VCHkzY9stYbAmyoXgc2TzZoJpfVn+7V0CJslG/GLSKg2C7mFT4quTV7oEvpg==
+"@factor/dashboard@^1.7.6":
+  version "1.7.6"
+  resolved "https://registry.yarnpkg.com/@factor/dashboard/-/dashboard-1.7.6.tgz#c1c8f47bfab9e992de4bde94298d62841dbe2615"
+  integrity sha512-RmABHlWwd+0sWLm5OFHFhH7ov1ve08VkkFJEWbdlOGEQlnVXMWruVkIteDVD5ywNCRvi45J9XOF9TpZnLDycmg==
   dependencies:
     "@factor/plugin-notify" "^1.7.2"
     "@factor/plugin-standard-signin" "^1.7.5"
@@ -201,10 +202,10 @@
     nodemailer "^6.2.1"
     nodemailer-html-to-text "^3.0.0"
 
-"@factor/endpoint@^1.6.0":
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/@factor/endpoint/-/endpoint-1.6.0.tgz#3a3a1ed610b2e6523f7e10781263de7f19b5f20e"
-  integrity sha512-Yj8hfiFwFTYLNIVp6RJtBuuoW7TKhr6ObaX14Y159wBuvrhyrNFsSGTpyP8ruppJtTmpdVESka9XPlkOG8MoKQ==
+"@factor/endpoint@^1.7.6":
+  version "1.7.6"
+  resolved "https://registry.yarnpkg.com/@factor/endpoint/-/endpoint-1.7.6.tgz#437c015015293df7e227f00b13c9497cae868cfc"
+  integrity sha512-x9NYYtO82+CMEooMOuJMYagWTWrl8JoMik/R5OS4O8tv9YzRLOrsmDXP8KDEbqnlZzZg/5hnR9vMV383LS4bIw==
   dependencies:
     "@types/http-errors" "^1.6.3"
     body-parser "^1.19.0"
@@ -257,10 +258,10 @@
   resolved "https://registry.yarnpkg.com/@factor/plugin-standard-signin/-/plugin-standard-signin-1.7.5.tgz#c6cd7bbd0c62a650b6c9b767945c82082ec4eb4c"
   integrity sha512-iESocN8aTVXR7M5iIMWpPsJBXuIkuJ+EMx476LeHjN9fZbIBCgM99eMVf/+McznAmn/F2Y0Yir7CgII2UIS2jQ==
 
-"@factor/post@^1.7.5":
-  version "1.7.5"
-  resolved "https://registry.yarnpkg.com/@factor/post/-/post-1.7.5.tgz#2a5f7994b92da4ba9ef3cdf636dddbc8aedf08ea"
-  integrity sha512-ikkY7cIymLstDGZ1FdDpeclsBt5BdSYjkv9iyovljXUKa20XF1wCcRpAb7hbxHH7LiVPGRogucFK/01dwLJ9Vw==
+"@factor/post@^1.7.6":
+  version "1.7.6"
+  resolved "https://registry.yarnpkg.com/@factor/post/-/post-1.7.6.tgz#208891931c5b14127fc46768521670c1a7b167cf"
+  integrity sha512-ook0e0jRWLscbhdhSwlHIVkpXlNi/RmjgMKGPmv7X/e8cFgwCVnfZdPPvNMXVm6vwQ8blUA2pyCJoOg5OBZ0ZA==
   dependencies:
     "@types/bson" "^4.0.2"
     "@types/mongoose" "^5.5.32"
@@ -320,20 +321,20 @@
   resolved "https://registry.yarnpkg.com/@factor/templates/-/templates-1.7.5.tgz#846ea1d3765c84ff1f73ae1dcebf5ee7576d6ed4"
   integrity sha512-WyI4R5NLtfqSqIl9ET3HKuOLu7T7YTSa1EcyRovaGdsMc41qwGnkO0W2RdpsQa/RHZC1mLS9IpyRo2xdwFUZoA==
 
-"@factor/ui@^1.7.5":
-  version "1.7.5"
-  resolved "https://registry.yarnpkg.com/@factor/ui/-/ui-1.7.5.tgz#7f58b716129ce6b47e609442b4668c89c197f730"
-  integrity sha512-MpckXsPy0PA8IrLLr0aPj9F6nPHgtXE4sCgWQK0W9HmZw7XGhw2IHyBnWoJPVZ8PcMhzr5LdC5KZCKdVijuyaw==
+"@factor/ui@^1.7.6":
+  version "1.7.6"
+  resolved "https://registry.yarnpkg.com/@factor/ui/-/ui-1.7.6.tgz#2e8a3759ca84e4002a7059599096291ad4eafb19"
+  integrity sha512-+6JtzQ8+u5110TSydAwBC4fcsy2PuEVd3W3iM+O/m/RHcnGr4GnPTd7VXRuk+B85/ORZcZQNn4QDjBs20BTgeA==
   dependencies:
     easymde "^2.9.0"
     gravatar "^1.8.0"
     sortablejs "^1.10.1"
     vuejs-datepicker "^1.6.2"
 
-"@factor/user@^1.7.5":
-  version "1.7.5"
-  resolved "https://registry.yarnpkg.com/@factor/user/-/user-1.7.5.tgz#0ae5f2226de94e1b7349766621b6ced6f761a1af"
-  integrity sha512-Ye85FG7Us51EPzUTEUWFg5C+4exvQvUq0vYuE32MgFq6QRHuKOtyHMUezI9NXf4+8pxW0+FmrxU3S8RnyPIHuA==
+"@factor/user@^1.7.7":
+  version "1.7.7"
+  resolved "https://registry.yarnpkg.com/@factor/user/-/user-1.7.7.tgz#d70df81a2833a6d79528e133945cc1871248a3d7"
+  integrity sha512-mlkHvKV4jOIZaOBbFklLvaz3ptAygabqDPJjECblr1Jqqn6t7aOLTsxY1VodaE00xb1tKiWhoIhKY54drixmRA==
   dependencies:
     "@types/bcryptjs" "^2.4.2"
     "@types/jsonwebtoken" "^8.3.5"
@@ -6945,6 +6946,14 @@ postcss-modules-values@^3.0.0:
     icss-utils "^4.0.0"
     postcss "^7.0.6"
 
+postcss-nested@^4.2.1:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/postcss-nested/-/postcss-nested-4.2.1.tgz#4bc2e5b35e3b1e481ff81e23b700da7f82a8b248"
+  integrity sha512-AMayXX8tS0HCp4O4lolp4ygj9wBn32DJWXvG6gCv+ZvJrEa00GUxJcJEEzMh87BIe6FrWdYkpR2cuyqHKrxmXw==
+  dependencies:
+    postcss "^7.0.21"
+    postcss-selector-parser "^6.0.2"
+
 postcss-normalize-charset@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/postcss-normalize-charset/-/postcss-normalize-charset-4.0.1.tgz#8b35add3aee83a136b0471e0d59be58a50285dd4"
@@ -7106,6 +7115,15 @@ postcss-value-parser@^4.0.0, postcss-value-parser@^4.0.2, postcss-value-parser@^
   version "7.0.27"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-7.0.27.tgz#cc67cdc6b0daa375105b7c424a85567345fc54d9"
   integrity sha512-WuQETPMcW9Uf1/22HWUWP9lgsIC+KEHg2kozMflKjbeUtw9ujvFX6QmIfozaErDkmLWS9WEnEdEe6Uo9/BNTdQ==
+  dependencies:
+    chalk "^2.4.2"
+    source-map "^0.6.1"
+    supports-color "^6.1.0"
+
+postcss@^7.0.21:
+  version "7.0.29"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-7.0.29.tgz#d3a903872bd52280b83bce38cdc83ce55c06129e"
+  integrity sha512-ba0ApvR3LxGvRMMiUa9n0WR4HjzcYm7tS+ht4/2Nd0NLtHpPIH77fuB9Xh1/yJVz9O/E/95Y/dn8ygWsyffXtw==
   dependencies:
     chalk "^2.4.2"
     source-map "^0.6.1"
