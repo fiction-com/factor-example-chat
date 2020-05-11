@@ -49,7 +49,7 @@ export default Vue.extend({
   },
   beforeDestroy () {
     offEvent("received-message", this.onChatMessage)
-    this.webSocketService.close()
+    this.webSocketService?.close()
   },
   methods: {
     submit (event: KeyboardEvent) {
