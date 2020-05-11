@@ -5,13 +5,13 @@ Chat example built with Factor. Includes middleware for a websocket as well as u
 </p>
 
 <p align="center">
-  <a href="https://chat-example.factor.dev" target="_blank">
+  <a href="https://factor-example-chat.herokuapp.com" target="_blank">
     <img src="./screenshot.jpg" width="500px" style="border: 2px solid #ff0;">
   </a>
 </p>
 
 <p align="center">
-<a href="https://chat-example.factor.dev" target="_blank"><strong>Live Demo &rarr;</strong></a>
+<a href="https://factor-example-chat.herokuapp.com" target="_blank"><strong>Live Demo &rarr;</strong></a>
 </p>
 
 
