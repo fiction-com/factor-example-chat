@@ -43,11 +43,10 @@
 import Vue from "vue"
 import { factorIcon } from "@factor/ui"
 import { logout, showSignIn, currentUser } from "@factor/api"
-import vChat from './el/v-chat.vue'
 import factorLogo from './el/factor-logo.vue'
 
 export default Vue.extend({
-  components: { factorIcon, vChat, factorLogo },
+  components: { factorIcon, factorLogo },
   metaInfo() {
     return {
       titleTemplate: "%s | Factor Example",

@@ -44,8 +44,8 @@ export default Vue.extend({
     }
   },
   mounted (this: any) {
-    this.startChat()
     onEvent("received-message", this.onChatMessage)
+    this.startChat()
   },
   beforeDestroy () {
     offEvent("received-message", this.onChatMessage)
@@ -59,7 +59,7 @@ export default Vue.extend({
       this.send()
       event.preventDefault()
     },
-    async startChat () {
+    async startChat (this: any) {
       this.messages = []
       // Create chat on backend.
       if (!this.chatIdComputed) {
@@ -73,6 +73,7 @@ export default Vue.extend({
         limit: 50, // number of embedded posts returned
         action: "retrieve",
       })
+      console.log('chat', chat)
       this.messages = chat.embedded
 
       // Connect websocket

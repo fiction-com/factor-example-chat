@@ -1,6 +1,6 @@
 <template>
   <div class="home-page">
-    <v-chat/>
+    <v-chat v-if="userInitialized"/>
   </div>
 </template>
 
@@ -8,11 +8,20 @@
 import Vue from "vue"
 import { currentUser, emitEvent } from "@factor/api"
 import vChat from '../el/v-chat.vue'
+import { userInitialized } from "@factor/api"
 
 export default Vue.extend({
   name: 'home',
   metaInfo: {
     title: "Home"
+  },
+  data() {
+    return {
+      userInitialized: false,
+    }
+  },
+  async mounted (this: any) {
+    this.userInitialized = await userInitialized()
   },
   components: { vChat},
   watch: {

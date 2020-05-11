@@ -1,6 +1,6 @@
 <template>
   <factor-modal :vis.sync="show">
-    <v-chat v-if="show" :chat-id="chatId"/>
+    <v-chat v-if="false" :chat-id="chatId"/>
   </factor-modal>
 </template>
 
@@ -27,6 +27,7 @@ export default Vue.extend({
   },
   methods: {
     async openChat (this: any, chatId: string) {
+      console.log('chatId', chatId)
       // Open modal
       this.chatId = chatId
       this.show = true
