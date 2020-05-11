@@ -6,7 +6,7 @@ Chat example built with Factor. Includes middleware for a websocket as well as u
 
 <p align="center">
   <a href="https://chat-example.factor.dev" target="_blank">
-    <img src="./screenshot-wide-user.jpg" width="500px" style="border: 2px solid #ff0;">
+    <img src="./screenshot.jpg" width="500px" style="border: 2px solid #ff0;">
   </a>
 </p>
 
@@ -16,7 +16,7 @@ Chat example built with Factor. Includes middleware for a websocket as well as u
 
 ## About
 
-This is a simplified chat example. Allows guest to communicate with admin.
+This is a simplified chat example. Allows guests to communicate with admin.
 
 ## Features
 
