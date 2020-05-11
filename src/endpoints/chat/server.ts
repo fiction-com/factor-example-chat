@@ -9,30 +9,39 @@ import WebSocket from 'ws'
 
 type Id = string
 
+// Track all open chats and close connection if client is down.
+const clientChats: Map<WebSocket, Id> = new Map()
+setInterval(() => {
+  ;[...clientChats].forEach(([client, chatId]) => {
+    if (client.readyState !== WebSocket.OPEN) {
+      client.close()
+    }
+    clientChats.delete(client)
+  })
+}, 60000)
+
 addCallback({
   hook: "before-middleware",
   key: "addWs",
   callback: ({app}: { app: Express & WithWebsocketMethod }) => {
-    const wsInstance = expressWs(app)
-    const clientChats: Map<WebSocket, Id> = new Map()
+    expressWs(app)
 
     app.ws("/__chat", async (ws, request: Request) => {
-      const bearer = await setAuthorizedUser(request.headers.authorization)
-      console.log('bearer', bearer)
-
+      // Authorize user
       const requestChatId = request.query.id as string
+      const token = request.query.token as string
+      const bearer = await setAuthorizedUser(token)
+
       clientChats.set(ws, requestChatId)
 
       // request used for auth/bearer
       ws.on("message", async (message: string) => {
-        const {_id, text, authorId} = JSON.parse(message) as { _id: string; text: string }
-
-        // TODO Passing user id is not ideal for security.
+        const {_id, text} = JSON.parse(message) as { _id: string; text: string }
 
         // Set up a post
         const postData = {
           content: text,
-          author: authorId ? [authorId]: []
+          author: bearer?._id ? [bearer?._id]: []
         }
 
         // Save as embedded

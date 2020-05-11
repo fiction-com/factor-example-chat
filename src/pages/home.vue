@@ -4,10 +4,7 @@
        Factor Chat Demo
     </h2>
 
-    <factor-btn class="chat-button" btn="primary" @click="openChat()">
-      Show Chat&nbsp;
-      <factor-icon icon="fa fa-comment"/>
-    </factor-btn>
+
   </div>
 </template>
 

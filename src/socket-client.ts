@@ -1,4 +1,4 @@
-import { emitEvent, isNode } from "@factor/api"
+import { emitEvent, isNode, bearerToken } from "@factor/api"
 
 const ensureNotNode = (): void | never => {
   if (isNode) throw new Error("Client sockets only work in browser.")
@@ -23,7 +23,8 @@ export class ChatWebsocketService {
     if (this.socket && this.socket.readyState == 1) {
       return this.socket
     } else {
-      this.socket = new WebSocket(socketUrl(`/__chat?id=${chatId}`))
+      const Authorization = await bearerToken()
+      this.socket = new WebSocket(socketUrl(`/__chat?id=${chatId}&token=${Authorization}`))
 
       return await new Promise(resolve => {
         this.socket.addEventListener("open", () => {

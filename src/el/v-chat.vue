@@ -25,7 +25,6 @@
 <script lang="ts">
 import Vue from "vue"
 import { factorBtn, factorAvatar, factorForm, factorInputWrap, factorModal } from "@factor/ui"
-import { registerChat } from "../chat-service"
 import { currentUser, requestEmbeddedPost, onEvent, currentUserId, offEvent } from "@factor/api"
 import { initChat } from "../endpoints/chat/client"
 import { ChatWebsocketService } from "../socket-client"
