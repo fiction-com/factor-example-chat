@@ -6,7 +6,7 @@
   "main": "src/index",
   "scripts": {
     "dev": "npx factor dev",
-    "start": "npx factor start",
+    "start": "npx factor serve",
     "build": "npx factor build",
     "lint": "npm run eslint && npm run types",
     "types": "tsc --skipLibCheck",
