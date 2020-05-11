@@ -1,6 +1,6 @@
 <template>
   <div class="home-page">
-    <v-chat v-if="userInitialized"/>
+    <v-chat v-if="userLoaded"/>
   </div>
 </template>
 
@@ -17,11 +17,12 @@ export default Vue.extend({
   },
   data() {
     return {
-      userInitialized: false,
+      userLoaded: false,
     }
   },
   async mounted (this: any) {
-    this.userInitialized = await userInitialized()
+    await userInitialized()
+    this.userLoaded = true
   },
   components: { vChat},
   watch: {
