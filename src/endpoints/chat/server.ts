@@ -15,10 +15,10 @@ setInterval(() => {
   ;[...clientChats].forEach(([client, chatId]) => {
     if (client.readyState !== WebSocket.OPEN) {
       client.close()
+      clientChats.delete(client)
     }
-    clientChats.delete(client)
   })
-}, 60000)
+}, 30000)
 
 addCallback({
   hook: "before-middleware",

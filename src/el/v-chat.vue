@@ -1,25 +1,23 @@
 <template>
-  <factor-modal :vis.sync="show">
-    <div class="chat-view">
-      <div class="messages">
-        <div v-for="(message, i) in messages" :key="i" class="message">
-          <div class="media">
-            <factor-avatar v-if="isMessageFromAdmin(message)" url="https://picsum.photos/id/0/50/50" />
-            <factor-avatar v-else url="https://picsum.photos/id/1025/50/50" />
-          </div>
-          <div class="content">
-            <div class="name" v-if="isMessageFromAdmin(message)">Admin:</div>
-            <div class="name" v-else>Guest:</div>
-            <div class="text">{{ message.content }}</div>
-          </div>
+  <div class="chat-view">
+    <div class="messages">
+      <div v-for="(message, i) in messages" :key="i" class="message">
+        <div class="media">
+          <factor-avatar v-if="isMessageFromAdmin(message)" url="https://picsum.photos/id/0/50/50" />
+          <factor-avatar v-else url="https://picsum.photos/id/1025/50/50" />
+        </div>
+        <div class="content">
+          <div class="name" v-if="isMessageFromAdmin(message)">Admin:</div>
+          <div class="name" v-else>Guest:</div>
+          <div class="text">{{ message.content }}</div>
         </div>
       </div>
-      <factor-form class="input-form">
-        <factor-input-wrap @keydown.enter="submit" class="input" placeholder="Type your message here..." v-model="messageText" input="factor-input-textarea"/>
-        <factor-btn btn="primary" @click="send()">Send</factor-btn>
-      </factor-form>
     </div>
-  </factor-modal>
+    <factor-form class="input-form">
+      <factor-input-wrap @keydown.enter="submit" class="input" placeholder="Type your message here..." v-model="messageText" input="factor-input-textarea"/>
+      <factor-btn btn="primary" @click="send()">Send</factor-btn>
+    </factor-form>
+  </div>
 </template>
 
 <script lang="ts">
@@ -32,33 +30,26 @@ import { ChatWebsocketService } from "../socket-client"
 export default Vue.extend({
   name: 'v-chat',
   components: { factorBtn, factorForm, factorInputWrap, factorAvatar, factorModal },
+  props: {
+    chatId: {
+      type: String,
+    }
+  },
   data() {
     return {
-      chatId: undefined,
-      show: false,
       registeredChatId: null,
       messages: [],
       messageText: "",
       webSocketService: null as ChatWebsocketService | null,
     }
   },
-  watch : {
-    show (show: boolean) {
-      if (!show) {
-        this.webSocketService.close()
-      }
-    }
-  },
   mounted (this: any) {
-    onEvent('open-chat', this.openChat)
+    this.startChat()
     onEvent("received-message", this.onChatMessage)
   },
   beforeDestroy () {
-    offEvent('open-chat', this.openChat)
     offEvent("received-message", this.onChatMessage)
-  },
-  metaInfo: {
-    title: "Chat"
+    this.webSocketService.close()
   },
   methods: {
     submit (event: KeyboardEvent) {
@@ -68,12 +59,8 @@ export default Vue.extend({
       this.send()
       event.preventDefault()
     },
-    async openChat (chatId: string) {
-      // Open modal
-      this.chatId = chatId
-      this.show = true
+    async startChat () {
       this.messages = []
-
       // Create chat on backend.
       if (!this.chatIdComputed) {
         this.registeredChatId = await initChat()

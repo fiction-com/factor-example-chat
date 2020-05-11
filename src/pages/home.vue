@@ -1,24 +1,20 @@
 <template>
   <div class="home-page">
-    <h2>
-       Factor Chat Demo
-    </h2>
-
-
+    <v-chat/>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue"
-import { factorBtn, factorIcon } from "@factor/ui"
 import { currentUser, emitEvent } from "@factor/api"
+import vChat from '../el/v-chat.vue'
 
 export default Vue.extend({
   name: 'home',
   metaInfo: {
     title: "Home"
   },
-  components: {factorBtn, factorIcon},
+  components: { vChat},
   watch: {
     currentUser: {
       handler (currentUser) {
@@ -44,7 +40,7 @@ export default Vue.extend({
 
 <style lang="less">
 .home-page {
-
+  padding-top: 0.5rem;
 }
 
 @keyframes chat-button-pulse

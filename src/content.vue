@@ -36,7 +36,6 @@
     <transition name="fade" mode="out-in">
       <router-view class="view" />
     </transition>
-    <v-chat/>
   </div>
 </template>
 

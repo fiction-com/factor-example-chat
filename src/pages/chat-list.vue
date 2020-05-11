@@ -16,6 +16,7 @@
         {{getCreatedAt(chat)}}
       </div>
     </div>
+    <v-chat-modal/>
   </div>
 </template>
 
@@ -24,6 +25,7 @@ import Vue from 'vue'
 import { requestPostIndex, currentUser, emitEvent } from '@factor/api'
 import formatRelative from 'date-fns/formatRelative'
 import { factorSpinner } from "@factor/ui"
+import vChatModal from '../el/v-chat-modal.vue'
 
 export default Vue.extend({
   name: 'chat-list',
@@ -32,6 +34,7 @@ export default Vue.extend({
   },
   components: {
     factorSpinner,
+    vChatModal,
   },
   watch: {
     currentUser: {
