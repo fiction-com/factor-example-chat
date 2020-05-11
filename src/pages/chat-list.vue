@@ -1,6 +1,5 @@
 <template>
   <div class="chat-list">
-    <h2>Chat List</h2>
     <factor-spinner v-if="loading" color-mode="primary" />
     <div
       class="item"
@@ -89,6 +88,7 @@ export default Vue.extend({
   --color-bg: #ffffff;
   --color-border: #eee;
   --color-hover: #eee;
+  margin-top: 1rem;
 
   .item {
     display: flex;
