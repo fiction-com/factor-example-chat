@@ -14,6 +14,7 @@ Chat example built with Factor. Includes middleware for a websocket as well as u
 <a href="https://chat-example.factor.dev" target="_blank"><strong>Live Demo &rarr;</strong></a>
 </p>
 
+
 ## About
 
 This is a simplified chat example. Allows guests to communicate with admin.
@@ -22,6 +23,13 @@ This is a simplified chat example. Allows guests to communicate with admin.
 
 - Embedded posts
 - Websockets with authentication
+- Guest and admin roles
+
+## Admin mode
+
+You can login as admin and check all chats with following credentials:
+* login: `chat-admin@factor.dev`
+* password: `69ndik8WUG9ubFA`
 
 ## Docs and Architecture Overview
 
