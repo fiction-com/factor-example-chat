@@ -23,7 +23,7 @@
 <script lang="ts">
 import Vue from "vue"
 import { factorBtn, factorAvatar, factorForm, factorInputWrap, factorModal } from "@factor/ui"
-import { currentUser, requestEmbeddedPost, onEvent, currentUserId, offEvent } from "@factor/api"
+import { currentUser, requestEmbeddedPost, onEvent, currentUserId, offEvent, userInitialized } from "@factor/api"
 import { initChat } from "../endpoints/chat/client"
 import { ChatWebsocketService } from "../socket-client"
 
@@ -43,7 +43,7 @@ export default Vue.extend({
       webSocketService: null as ChatWebsocketService | null,
     }
   },
-  mounted (this: any) {
+  async mounted (this: any) {
     onEvent("received-message", this.onChatMessage)
     this.startChat()
   },
@@ -61,6 +61,9 @@ export default Vue.extend({
     },
     async startChat (this: any) {
       this.messages = []
+
+      await userInitialized()
+
       // Create chat on backend.
       if (!this.chatIdComputed) {
         this.registeredChatId = await initChat()
