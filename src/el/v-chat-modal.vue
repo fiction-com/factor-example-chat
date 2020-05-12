@@ -1,6 +1,6 @@
 <template>
   <factor-modal :vis.sync="show">
-    <v-chat v-if="false" :chat-id="chatId"/>
+    <v-chat v-if="show" :chat-id="chatId"/>
   </factor-modal>
 </template>
 
