@@ -91,6 +91,10 @@ html.factor-app {
   color: var(--color-text);
   overflow-y: scroll;
 
+  .factor-btn {
+    padding: 0.7em 1.4em;
+  }
+
   a {
     color: var(--color-text);
     text-decoration: none;
