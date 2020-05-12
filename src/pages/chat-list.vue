@@ -88,7 +88,7 @@ export default Vue.extend({
   --color-bg: #ffffff;
   --color-border: #eee;
   --color-hover: #eee;
-  margin-top: 1rem;
+  padding-top: 1rem;
 
   .item {
     display: flex;
