@@ -1,4 +1,4 @@
-import { emitEvent, isNode } from "@factor/api"
+import { emitEvent, isNode, bearerToken } from "@factor/api"
 
 const ensureNotNode = (): void | never => {
   if (isNode) throw new Error("Client sockets only work in browser.")
@@ -11,42 +11,49 @@ const socketUrl = (relativePath: string): string => {
   return `${wsProtocol}//${loc.host}${relativePath}`
 }
 
-/**
- * Make stateful so we don't initialize multiple times
- */
-let __socket: WebSocket
+export class ChatWebsocketService {
+  socket?: WebSocket
 
-/**
- * Initialize socket or get already initialized socket
- */
-const getSocket = async (): Promise<WebSocket> => {
-  ensureNotNode()
-  if (__socket && __socket.readyState == 1) {
-    return __socket
-  } else {
-    __socket = new WebSocket(socketUrl("/__chat"))
+  /**
+   * Spin up websocket connection.
+   * @param chatId
+   */
+  async initialize (chatId: string): Promise<WebSocket> {
+    ensureNotNode()
+    if (this.socket && this.socket.readyState == 1) {
+      return this.socket
+    } else {
+      const Authorization = await bearerToken()
+      this.socket = new WebSocket(socketUrl(`/__chat?id=${chatId}&token=${Authorization}`))
 
-    return await new Promise(resolve => {
-      __socket.addEventListener("open", () => {
-        __socket.addEventListener("message", function(event: MessageEvent) {
-          emitEvent("received-message", JSON.parse(event.data))
+      return await new Promise(resolve => {
+        this.socket.addEventListener("open", () => {
+          this.socket.addEventListener("message", function(event: MessageEvent) {
+            emitEvent("received-message", JSON.parse(event.data))
+          })
+          resolve(this.socket)
         })
-        resolve(__socket)
       })
-    })
+    }
+  }
+
+  async close () {
+    this.socket.close()
+    this.socket = undefined
+  }
+
+  /**
+   * Send a message to the socket
+   * @param data
+   */
+  async sendMessage (data: {
+    _id: string;
+    text: string;
+  }): Promise<void> {
+    if (!this.socket) {
+      throw new Error('Initialize socket first.')
+    }
+    this.socket.send(JSON.stringify(data))
   }
 }
 
-/**
- * Send a message to the socket
- * @param text - message
- */
-export const sendMessage = async (data: {
-  name: string;
-  email: string;
-  text: string;
-}): Promise<void> => {
-  const sock = await getSocket()
-
-  sock.send(JSON.stringify(data))
-}

@@ -5,27 +5,31 @@ Chat example built with Factor. Includes middleware for a websocket as well as u
 </p>
 
 <p align="center">
-  <a href="https://hacker-news-example.factor.dev" target="_blank">
-    <img src="./screenshot-wide.jpg" width="500px" style="border: 2px solid #ff0;">
+  <a href="https://factor-example-chat.herokuapp.com" target="_blank">
+    <img src="./screenshot.jpg" width="500px" style="border: 2px solid #ff0;">
   </a>
 </p>
 
 <p align="center">
-<a href="https://hacker-news-example.factor.dev" target="_blank"><strong>Live Demo &rarr;</strong></a>
+<a href="https://factor-example-chat.herokuapp.com" target="_blank"><strong>Live Demo &rarr;</strong></a>
 </p>
+
 
 ## About
 
-This is an example of the framework capabilities of Factor. Use it as a reference for core API tools (`@factor/api`) as well as a helpful structure for a typical JS app.
+This is a simplified chat example. Allows guests to communicate with admin.
 
 ## Features
 
-- Uses flat store + cache (using `stored` and `storeItem` utilities)
-- Supports multiple views and routes
-- Complete Vue SSR framework
-- Real-time updating with animation
-- Meta handling with image, title, icon/favicon
-- ESlint, Prettier, TypeScript configured
+- Embedded posts
+- Websockets with authentication
+- Guest and admin roles
+
+## Admin mode
+
+You can login as admin and check all chats with following credentials:
+* login: `chat-admin@factor.dev`
+* password: `69ndik8WUG9ubFA`
 
 ## Docs and Architecture Overview
 
@@ -39,7 +43,7 @@ This is an example of the framework capabilities of Factor. Use it as a referenc
 # install dependencies
 npm install # or yarn
 
-# serve in dev mode, with hot reload at localhost:8080
+# serve in dev mode, with hot reload at localhost:3000
 npm run dev
 
 # build for production

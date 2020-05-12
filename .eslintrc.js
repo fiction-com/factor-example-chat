@@ -81,6 +81,6 @@ module.exports = {
   ],
 
   settings: {
-    "import/ignore": ["firebase", "create-api"]
+    "import/ignore": ["create-api"]
   }
 }

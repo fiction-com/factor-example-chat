@@ -1,79 +1,133 @@
 <template>
   <div class="chat-view">
-    <factor-form class="input-form">
-      <div class="meta">
-        <factor-input-wrap v-model="data.name" input="factor-input-text" label="Name" />
-        <factor-input-wrap v-model="data.email" input="factor-input-email" label="Email" />
-      </div>
-      <factor-input-wrap v-model="data.text" input="factor-input-textarea" label="Message" />
-
-      <factor-btn btn="primary" @click="send()">Send</factor-btn>
-    </factor-form>
     <div class="messages">
       <div v-for="(message, i) in messages" :key="i" class="message">
         <div class="media">
-          <factor-avatar :email="message.email" />
+          <factor-avatar v-if="isMessageFromAdmin(message)" url="https://picsum.photos/id/0/50/50" />
+          <factor-avatar v-else url="https://picsum.photos/id/1025/50/50" />
         </div>
         <div class="content">
-          <div class="name">{{ message.name }}</div>
-          <div class="text">{{ message.text }}</div>
+          <div class="name" v-if="isMessageFromAdmin(message)">Admin:</div>
+          <div class="name" v-else>Guest:</div>
+          <div class="text">{{ message.content }}</div>
         </div>
       </div>
     </div>
+    <factor-form class="input-form">
+      <factor-input-wrap @keydown.enter="submit" class="input" placeholder="Type your message here..." v-model="messageText" input="factor-input-textarea"/>
+      <factor-btn btn="primary" @click="send()">Send</factor-btn>
+    </factor-form>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue"
-import { factorBtn, factorAvatar, factorForm, factorInputWrap } from "@factor/ui"
-import { onEvent } from "@factor/api"
-import { sendMessage } from "../socket-client"
+import { factorBtn, factorAvatar, factorForm, factorInputWrap, factorModal } from "@factor/ui"
+import { currentUser, requestEmbeddedPost, onEvent, currentUserId, offEvent, userInitialized } from "@factor/api"
+import { initChat } from "../endpoints/chat/client"
+import { ChatWebsocketService } from "../socket-client"
 
 export default Vue.extend({
-  components: { factorBtn, factorForm, factorInputWrap, factorAvatar },
-  data() {
-    return {
-      messages: [],
-      data: {
-        email: "",
-        name: "",
-        text: ""
-      }
+  name: 'v-chat',
+  components: { factorBtn, factorForm, factorInputWrap, factorAvatar, factorModal },
+  props: {
+    chatId: {
+      type: String,
     }
   },
-  metaInfo: {
-    title: "Chat"
+  data() {
+    return {
+      registeredChatId: null,
+      messages: [],
+      messageText: "",
+      webSocketService: null as ChatWebsocketService | null,
+    }
   },
-  mounted(this: any) {
-    onEvent("received-message", (data: MessageEvent) => {
-      this.messages.unshift(data)
-    })
+  async mounted (this: any) {
+    onEvent("received-message", this.onChatMessage)
+    this.startChat()
+  },
+  beforeDestroy () {
+    offEvent("received-message", this.onChatMessage)
+    this.webSocketService?.close()
   },
   methods: {
-    async send(this: any) {
-      await sendMessage(this.data)
-      this.messages.unshift({ ...this.data }) // remove mutable
-      this.data.text = ""
+    submit (event: KeyboardEvent) {
+      if (event.ctrlKey || event.shiftKey) {
+        return
+      }
+      this.send()
+      event.preventDefault()
+    },
+    async startChat (this: any) {
+      this.messages = []
+
+      await userInitialized()
+
+      // Create chat on backend.
+      if (!this.chatIdComputed) {
+        this.registeredChatId = await initChat()
+      }
+
+      // Get all chat messages.
+      const chat = await requestEmbeddedPost({
+        parentId: this.chatIdComputed, // parent post ID
+        skip: 0, // embedded post to skip
+        limit: 50, // number of embedded posts returned
+        action: "retrieve",
+      })
+      console.log('chat', chat)
+      this.messages = chat.embedded
+
+      // Connect websocket
+      this.webSocketService = new ChatWebsocketService()
+      await this.webSocketService.initialize(this.chatIdComputed)
+    },
+    onChatMessage (message: any) {
+      this.messages = [...this.messages, ...message.embedded]
+    },
+    async send (this: any) {
+      await this.webSocketService.sendMessage({_id: this.chatIdComputed, text: this.messageText, authorId: currentUserId()})
+      this.messageText = ''
+    },
+    isMessageFromAdmin (message: any): boolean {
+      return message.author.length
+    },
+  },
+  computed: {
+    chatIdComputed (this: any): string {
+      return this.chatId || this.registeredChatId
+    },
+    currentUser () {
+      return currentUser()
     }
   }
 })
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .message {
-  padding: 1rem 0;
-  border-bottom: 1px solid var(--color-border);
   display: grid;
   grid-template-columns: 3rem 1fr;
   grid-gap: 1rem;
+  padding: 1rem 0;
+  text-align: left;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid var(--color-border);
+  }
+
   .name {
     font-weight: var(--font-weight-bold, 700);
   }
   .text {
     margin-top: 0.5rem;
   }
+  .avatar {
+    width: inherit;
+  }
 }
 .input-form {
-  margin: 3rem 0;
+  margin-top: 1rem;
   .meta {
     display: grid;
     grid-template-columns: 1fr 1fr;
